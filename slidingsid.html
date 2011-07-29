@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>Sliding Sid</TITLE>
+<script language="javascript">
+<!-- start of code
+
+//Set up variables
+var win = false;
+var shuffleCount = 0;
+var randomShuffle = 0;
+var pictemp = "blankbox";
+var picbox1 = "blankbox";
+var picbox2 = "image4";
+var picbox3 = "image9";
+var picbox4 = "image3";
+var picbox5 = "image8";
+var picbox6 = "image6";
+var picbox7 = "image7";
+var picbox8 = "image5";
+var picbox9 = "image2";
+var blank = 1;
+
+//Set up array for square location validation
+var validation = new Array();
+validation[0] = new Array(1,2,1,4);
+validation[1] = new Array(2,1,2,5,2,3);
+validation[2] = new Array(3,6,3,2);
+validation[3] = new Array(4,1,4,5,4,7);
+validation[4] = new Array(5,4,5,2,5,6,5,8);
+validation[5] = new Array(6,3,6,5,6,9);
+validation[6] = new Array(7,4,7,8);
+validation[7] = new Array(8,7,8,5,8,9);
+validation[8] = new Array(9,8,9,6);
+
+//Set up rollovers
+
+// Netscape 3.0 compatibility test (for javascript image swapping)
+compat = false;
+if( parseInt( navigator.appVersion ) >= 3 ) { compat = true; }
+
+// cache images 
+if( compat ) {
+pic1off = new Image(60,60)
+pic1off.src = "images/blankbox.gif";
+pic2off = new Image(60,60)
+pic2off.src = "images/image4.gif";
+pic3off = new Image(60,60)
+pic3off.src = "images/image9.gif";
+pic4off = new Image(60,60)
+pic4off.src = "images/image3.gif";
+pic5off = new Image(60,60)
+pic5off.src = "images/image8.gif";
+pic6off = new Image(60,60)
+pic6off.src = "images/image6.gif";
+pic7off = new Image(60,60)
+pic7off.src = "images/image7.gif";
+pic8off = new Image(60,60)
+pic8off.src = "images/image5.gif";
+pic9off = new Image(60,60)
+pic9off.src = "images/image2.gif";
+}
+
+// swap images using the cached images
+function lights(x, y) {
+if( compat ) { document.images[x].src=eval(y+'.src'); }
+}
+
+function resetImg() {
+	for (var i=1;i<10;i++) {
+	eval("pic"+i+"off.src = \"images/\"+picbox"+i+"+\".gif\";");
+	}
+}
+
+function validMove(sq) {
+isValidMove=false;
+for (var i=0;i<validation.length;i++) {
+	for (var j=0;j<validation[i].length;j++) {
+	if(j%2==0) {
+			if (sq == validation[i][j] && blank == validation[i][j+1]) isValidMove = true;
+			}
+		}
+	}
+return isValidMove;
+}
+
+function moveSquare(mv) {
+if (win == true) doWin();
+else
+if (validMove(mv)) {
+//keep temp var for one image swap
+eval('pictemp = picbox'+mv+';');
+eval('picbox'+mv+' = picbox'+blank+';');
+eval('picbox'+blank+' = pictemp;');	
+//reset blank var to new location
+blank = mv;
+resetImg();
+display();
+	}
+}
+
+function drawOn() {
+for (var i = 1;i < 10; i++) {
+eval(' lights(\'pic'+i+'\',\'pic'+i+'off\'); ');	
+	}
+}
+
+function display() {
+drawOn();
+check();
+}
+
+function check() {
+if (picbox1 == "blankbox" && picbox2 == "image2" && picbox3 == "image3" && picbox4 == "image4" && picbox5 == "image5" && picbox6 == "image6" && picbox7 == "image7" && picbox8 == "image8" && picbox9 == "image9") {
+	setTimeout( 'winner()', 1500 );
+	win = true;
+	}
+}
+
+function doWin() {
+window.location="";
+}
+
+function winner() {
+alert('\nWell Done!');
+}
+
+function rand(rnum) {
+return Math.floor((Math.random()*rnum)+1);
+}
+
+function shuffle() {
+shuffleCount++;
+setTimeout( 'moveSquare(rand(9))', shuffleCount*20 );
+
+if (shuffleCount <= 200) shuffle();
+else
+setTimeout( 'alert("You can start sliding Sid...")', shuffleCount*20 );	
+}
+
+//End Puzzle script -----------------------------------------------
+
+// end of code -->
+</script>
+</HEAD>
+
+<body onLoad = "shuffle();window.defaultStatus = 'Welcome to Sliding Sid...'" bgcolor="#000031" text="#ccccff" link="#ff9900" vlink="#00CC00" alink="#0000CC">
+
+<center>
+<!-- Begin Puzzle image display -->
+<img src="images/complete_sid.gif" border="0" vspace=8 name="Sid - the purple plant">
+<table align="center" width="180" cellspacing="0" cellpadding="0" border="0">
+<tr>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(1)" onclick="lights('pic1','pic1off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/blankbox.gif" border="0" name="pic1"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(2)" onclick="lights('pic2','pic2off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image4.gif" border="0" name="pic2"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(3)" onclick="lights('pic3','pic3off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image9.gif" border="0" name="pic3"></a></td>
+</tr>
+<tr>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(4)" onclick="lights('pic4','pic4off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image3.gif" border="0" name="pic4"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(5)" onclick="lights('pic5','pic5off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image8.gif" border="0" name="pic5"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(6)" onclick="lights('pic6','pic6off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image6.gif" border="0" name="pic6"></a></td>
+</tr>
+<tr>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(7)" onclick="lights('pic7','pic7off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image7.gif" border="0" name="pic7"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(8)" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image5.gif" border="0" name="pic8"></a></td>
+    <td width="60" align="center" valign="top"><a href="javascript:moveSquare(9)" onclick="lights('pic9','pic9off')" onMouseOver="self.status='Sliding Puzzle'; return true"><img src="images/image2.gif" border="0" name="pic9"></a></td>
+</tr>
+</table>
+<!-- End Puzzle image display -->
+</center>
+
+</BODY>
+</HTML>
