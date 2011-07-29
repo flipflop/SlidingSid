@@ -1,0 +1,8 @@
+A simple sliding puzzle game 'Sliding Sid', using document.images
+
+Originally written in 2001.  
+
+Note the use of Globals, inline event handlers and presentational tags, that's how we rolled back then ;)
+
+I've decided to put in on Github to remind myself of my humble start into JavaScript.
+
